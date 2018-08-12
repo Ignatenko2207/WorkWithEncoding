@@ -18,7 +18,6 @@ public class CodeMatcher {
 			while ((tempText = bufferedReader.readLine()) != null) {
 				fileText += tempText;
 			}
-			System.out.println(fileText);
 			String rowOne = fileText.split(" ")[0];
 			String rowTwo = fileText.split(" ")[1];
 			
