@@ -6,7 +6,7 @@ import info.mypackage.service.FileOrganizer;
 public class AppRunner {
 
 	public static void main(String[] args) {
-		String text = "edabc dabcd";
+		String text = "edakl dlkcd";
 		
 		String encodedString = CodeManipulator.encryptCode(text);
 		FileOrganizer.writeEncriptedTextToFile(encodedString);

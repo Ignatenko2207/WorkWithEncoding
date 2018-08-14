@@ -11,22 +11,22 @@ public class CodeManipulator {
 		String encodedString = "";
 
 		char[] symbols = modifiedText.toCharArray();
-		
+		SymbolsMapping mapperOne = CodeMatcher.getSymbolsMapping();
+		SymbolsMapping mapperTwo = CodeMatcher.getSymbolsMapping();
+
 		for (int i = 0; i < symbols.length; i++) {
 			if (i % 2 == 0) {
-				String symbol = getEncodedSymbolFromMatrixOne(String.valueOf(symbols[i]));
+				String symbol = getEncodedSymbolFromMatrixOne(mapperOne, String.valueOf(symbols[i]));
 				encodedString += symbol;
 			} else {
-				String symbol = getEncodedSymbolFromMatrixTwo(String.valueOf(symbols[i]));
+				String symbol = getEncodedSymbolFromMatrixTwo(mapperTwo, String.valueOf(symbols[i]));
 				encodedString += symbol;
 			}
 		}
-		System.out.println(encodedString);
 		return encodedString;
 	}
 
-	private static String getEncodedSymbolFromMatrixTwo(String symbol) {
-		SymbolsMapping mapper = CodeMatcher.getSymbolsMapping();
+	private static String getEncodedSymbolFromMatrixTwo(SymbolsMapping mapper, String symbol) {
 		for (int i = 0; i < mapper.getMatrixKey().length; i++) {
 			for (int j = 0; j < mapper.getMatrixKey()[i].length; j++) {
 				if (symbol.equals(mapper.getMatrixKey()[i][j])) {
@@ -38,8 +38,7 @@ public class CodeManipulator {
 		return "";
 	}
 
-	private static String getEncodedSymbolFromMatrixOne(String symbol) {
-		SymbolsMapping mapper = CodeMatcher.getSymbolsMapping();
+	private static String getEncodedSymbolFromMatrixOne(SymbolsMapping mapper, String symbol) {
 		for (int i = 0; i < mapper.getMatrixKey().length; i++) {
 			for (int j = 0; j < mapper.getMatrixKey()[i].length; j++) {
 				if (symbol.equals(mapper.getMatrixKey()[i][j])) {
