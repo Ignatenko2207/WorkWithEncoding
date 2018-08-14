@@ -2,25 +2,35 @@ package info.mypackage.model;
 
 public class SymbolsMapping {
 
-	private String matrixRowOne;
+	private String[][] matrixKey;
 	
-	private String matrixRowTwo;
+	private String[][] matrixRowOne;
+	
+	private String[][] matrixRowTwo;
 
-	public String getMatrixRowOne() {
+	public String[][] getMatrixKey() {
+		return matrixKey;
+	}
+
+	public void setMatrixKey(String[][] matrixKey) {
+		this.matrixKey = matrixKey;
+	}
+
+	public String[][] getMatrixRowOne() {
 		return matrixRowOne;
 	}
 
-	public void setMatrixRowOne(String matrixRowOne) {
+	public void setMatrixRowOne(String[][] matrixRowOne) {
 		this.matrixRowOne = matrixRowOne;
 	}
 
-	public String getMatrixRowTwo() {
+	public String[][] getMatrixRowTwo() {
 		return matrixRowTwo;
 	}
 
-	public void setMatrixRowTwo(String matrixRowTwo) {
+	public void setMatrixRowTwo(String[][] matrixRowTwo) {
 		this.matrixRowTwo = matrixRowTwo;
 	}
-	
-	
+
+		
 }

@@ -8,24 +8,46 @@ import info.mypackage.model.SymbolsMapping;
 
 public class CodeMatcher {
 
-	public static SymbolsMapping getSymbolsMapping(String filePath){
+	private static final String KEY_PATH = System.getProperty("user.dir") + System.getProperty("file.separator") + "lib"
+			+ System.getProperty("file.separator") + "key.txt";
+
+	private static final String MATCHER_ONE_PATH = System.getProperty("user.dir") + System.getProperty("file.separator")
+			+ "lib" + System.getProperty("file.separator") + "matchingRowOne.txt";
+
+	private static final String MATCHER_TWO_PATH = System.getProperty("user.dir") + System.getProperty("file.separator")
+			+ "lib" + System.getProperty("file.separator") + "matchingRowTwo.txt";
+
+	public static SymbolsMapping getSymbolsMapping(){
 		
-		try ( 	FileReader fileReader = new FileReader(filePath);
+		String[][] key = getMatrix(KEY_PATH);
+		String[][] mapRowOne = getMatrix(MATCHER_ONE_PATH);
+		String[][] mapRowTwo = getMatrix(MATCHER_TWO_PATH);
+		
+		SymbolsMapping mapper = new SymbolsMapping();
+		mapper.setMatrixKey(key);
+		mapper.setMatrixRowOne(mapRowOne);
+		mapper.setMatrixRowTwo(mapRowTwo);
+
+		return mapper;
+	}
+	
+	private static String[][] getMatrix(String path){
+		try ( 	FileReader fileReader = new FileReader(path);
 				BufferedReader bufferedReader = new BufferedReader(fileReader))
 		{
-			String fileText = "";
+			String[][] matrix = new String[3][5];
 			String tempText = "";
 			while ((tempText = bufferedReader.readLine()) != null) {
-				fileText += tempText;
+				String[] lines = tempText.split(" ");
+				for (int i = 0; i < lines.length; i++) {
+					char[] symbols = lines[i].toCharArray();
+					for (int j = 0; j < symbols.length; j++) {
+						matrix[i][j] = String.valueOf(symbols[j]);
+					}
+				}
+				
 			}
-			String rowOne = fileText.split(" ")[0];
-			String rowTwo = fileText.split(" ")[1];
-			
-			SymbolsMapping symbolsMapping = new SymbolsMapping();
-			symbolsMapping.setMatrixRowOne(rowOne);
-			symbolsMapping.setMatrixRowTwo(rowTwo);
-			
-			return symbolsMapping;
+			return matrix;
 			
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -33,6 +55,5 @@ public class CodeMatcher {
 		
 		return null;
 	}
-	
 	
 }

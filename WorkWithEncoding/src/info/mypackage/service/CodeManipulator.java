@@ -5,32 +5,50 @@ import info.mypackage.util.CodeMatcher;
 
 public class CodeManipulator {
 
-	private static final String MATCHER_ONE_PATH = System.getProperty("user.dir") + System.getProperty("file.separator")
-			+ "lib" + System.getProperty("file.separator") + "matchingRowOne.txt";
-
-	private static final String MATCHER_TWO_PATH = System.getProperty("user.dir") + System.getProperty("file.separator")
-			+ "lib" + System.getProperty("file.separator") + "matchingRowTwo.txt";
-
 	public static String encryptCode(String text) {
 
 		String modifiedText = getModifiedText(text);
 		String encodedString = "";
 
 		char[] symbols = modifiedText.toCharArray();
-		SymbolsMapping mapperOne = CodeMatcher.getSymbolsMapping(MATCHER_ONE_PATH);
-		SymbolsMapping mapperTwo = CodeMatcher.getSymbolsMapping(MATCHER_TWO_PATH);
-
+		
 		for (int i = 0; i < symbols.length; i++) {
 			if (i % 2 == 0) {
-				int index = mapperOne.getMatrixRowOne().indexOf(symbols[i]);
-				encodedString += mapperOne.getMatrixRowTwo().charAt(index);
+				String symbol = getEncodedSymbolFromMatrixOne(String.valueOf(symbols[i]));
+				encodedString += symbol;
 			} else {
-				int index = mapperTwo.getMatrixRowOne().indexOf(symbols[i]);
-				encodedString += mapperTwo.getMatrixRowTwo().charAt(index);
+				String symbol = getEncodedSymbolFromMatrixTwo(String.valueOf(symbols[i]));
+				encodedString += symbol;
 			}
 		}
-
+		System.out.println(encodedString);
 		return encodedString;
+	}
+
+	private static String getEncodedSymbolFromMatrixTwo(String symbol) {
+		SymbolsMapping mapper = CodeMatcher.getSymbolsMapping();
+		for (int i = 0; i < mapper.getMatrixKey().length; i++) {
+			for (int j = 0; j < mapper.getMatrixKey()[i].length; j++) {
+				if (symbol.equals(mapper.getMatrixKey()[i][j])) {
+					return mapper.getMatrixRowTwo()[i][j];
+				}
+			}
+		}
+		
+		return "";
+	}
+
+	private static String getEncodedSymbolFromMatrixOne(String symbol) {
+		SymbolsMapping mapper = CodeMatcher.getSymbolsMapping();
+		for (int i = 0; i < mapper.getMatrixKey().length; i++) {
+			for (int j = 0; j < mapper.getMatrixKey()[i].length; j++) {
+				if (symbol.equals(mapper.getMatrixKey()[i][j])) {
+					return mapper.getMatrixRowOne()[i][j];
+				}
+			}
+		}
+		
+		return "";
 	}
 
 	public static String decryptCode(String text) {
