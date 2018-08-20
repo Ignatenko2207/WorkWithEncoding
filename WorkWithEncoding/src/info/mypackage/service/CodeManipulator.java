@@ -55,7 +55,7 @@ public class CodeManipulator {
 		return "";
 	}
 
-	private static String getModifiedText(String text) {
+	public static String getModifiedText(String text) {
 		String modifiedText = text.replaceAll("[^A-Za-z]", "");
 		modifiedText = modifiedText.replaceAll("\n", "");
 		modifiedText = modifiedText.replaceAll("\r", "");
